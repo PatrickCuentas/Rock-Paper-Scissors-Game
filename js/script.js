@@ -1,5 +1,5 @@
 function computerPlay(){
-    let choice = ["Rock","Paper","Scissors"];
+    const choice = ["Rock","Paper","Scissor"];
     let randomPick = Math.floor(Math.random() * 3);
     return choice[randomPick];
 }
@@ -9,8 +9,8 @@ function playRound(playerSelection,computerSelection){
     let winner;
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
-    if(playerSelection === "rock" && computerSelection === "scissors"){
-        message = "You Win! Rock beats Scissors";
+    if(playerSelection === "rock" && computerSelection === "scissor"){
+        message = "You Win! Rock beats Scissor";
         winner = 1;
     }
     else if(playerSelection === "paper" && computerSelection === "rock"){
@@ -18,14 +18,22 @@ function playRound(playerSelection,computerSelection){
         winner = 1;
     }
     else if(playerSelection === "scissors" && computerSelection === "paper"){
-        message = "You Win! Scissors beats Paper";
+        message = "You Win! Scissor beats Paper";
         winner = 1;
     }
     else if(playerSelection === computerSelection){
-        message = `It's a Tie! ${computerSelection.replace(computerSelection.charAt(0),computerSelection.charAt(0).toUpperCase())} loves ${playerSelection.replace(playerSelection.charAt(0),playerSelection.charAt(0).toUpperCase())}`;
+        message = `It's a Tie! ${computerSelection.replace(
+                            computerSelection.charAt(0),
+                            computerSelection.charAt(0).toUpperCase())}
+                            loves ${playerSelection.replace(playerSelection.charAt(0),
+                            playerSelection.charAt(0).toUpperCase())}`;
     }
     else {
-        message = `You Lose! ${computerSelection.replace(computerSelection.charAt(0),computerSelection.charAt(0).toUpperCase())} beats ${playerSelection.replace(playerSelection.charAt(0),playerSelection.charAt(0).toUpperCase())}`;
+        message = `You Lose! ${computerSelection.replace(
+                            computerSelection.charAt(0),
+                            computerSelection.charAt(0).toUpperCase())}
+                            beats ${playerSelection.replace(playerSelection.charAt(0),
+                            playerSelection.charAt(0).toUpperCase())}`;
         winner = 2;
     }
     console.log(message);
@@ -39,7 +47,10 @@ function game(playerSelection){
     for(let i = 0,winner;i<5;i++){
         // const playerSelection = "rock";
         const computerSelection = computerPlay();
-        winner = playRound(playerSelection,computerSelection,playerScore,computerScore);
+        winner = playRound(playerSelection,
+                                          computerSelection,
+                                          playerScore,
+                                          computerScore);
         (winner === 1) ? playerScore++ : 
         (winner === 2) ? computerScore++ : tieScore++;
     }
@@ -58,3 +69,4 @@ function game(playerSelection){
 }
 const playerSelection = prompt("Choose Rock, Paper or Scissor");
 game(playerSelection);
+
