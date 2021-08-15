@@ -1,72 +1,116 @@
-function computerPlay(){
-    const choice = ["Rock","Paper","Scissor"];
-    let randomPick = Math.floor(Math.random() * 3);
-    return choice[randomPick];
+// Empujar cambios rama principal
+//  git push ó git push origin main
+// Empujar cambios a otra rama
+// git push origin #nombre rama => git push origin rps-ui
+const countPlayer = document.querySelector(".c-player");
+const countComputer = document.querySelector(".c-computer");
+const imgParentPlayer = document.querySelector(".content");
+const imgParentComputer = document.querySelector(".content.inverted");
+const buttons = document.querySelectorAll(".button");
+const userName = document.querySelector("#username");
+
+let computerScore = 0;
+let playerScore = 0;
+let user;
+let endGame = false;
+// user = prompt("Ingrese su nombre","");
+
+if (!user) user = "Patrick";
+userName.textContent = user;
+
+function computerPlay() {
+  const choice = ["rock", "paper", "scissor"];
+  let randomPick = Math.floor(Math.random() * 3);
+  return choice[randomPick];
 }
 
-function playRound(playerSelection,computerSelection){
-    let message;
-    let winner;
-    playerSelection = playerSelection.toLowerCase();
-    computerSelection = computerSelection.toLowerCase();
-    if(playerSelection === "rock" && computerSelection === "scissor"){
-        message = "You Win! Rock beats Scissor";
-        winner = 1;
-    }
-    else if(playerSelection === "paper" && computerSelection === "rock"){
-        message = "You Win! Paper beats Rock";
-        winner = 1;
-    }
-    else if(playerSelection === "scissors" && computerSelection === "paper"){
-        message = "You Win! Scissor beats Paper";
-        winner = 1;
-    }
-    else if(playerSelection === computerSelection){
-        message = `It's a Tie! ${computerSelection.replace(
-                            computerSelection.charAt(0),
-                            computerSelection.charAt(0).toUpperCase())}
-                            loves ${playerSelection.replace(playerSelection.charAt(0),
-                            playerSelection.charAt(0).toUpperCase())}`;
-    }
-    else {
-        message = `You Lose! ${computerSelection.replace(
-                            computerSelection.charAt(0),
-                            computerSelection.charAt(0).toUpperCase())}
-                            beats ${playerSelection.replace(playerSelection.charAt(0),
-                            playerSelection.charAt(0).toUpperCase())}`;
-        winner = 2;
-    }
-    console.log(message);
-    return winner;
+function playRound(playerSelection, computerSelection) {
+  let message;
+  let winner;
+  if (playerSelection === "rock" && computerSelection === "scissor") {
+    message = "You Win! Rock beats Scissor";
+    winner = 0;
+  } else if (playerSelection === "paper" && computerSelection === "rock") {
+    message = "You Win! Paper beats Rock";
+    winner = 0;
+  } else if (playerSelection === "scissor" && computerSelection === "paper") {
+    message = "You Win! Scissor beats Paper";
+    winner = 0;
+  } else if (playerSelection === computerSelection) {
+    message = `It's a Tie! ${computerSelection.replace(
+      computerSelection.charAt(0),
+      computerSelection.charAt(0).toUpperCase()
+    )} loves ${playerSelection.replace(
+      playerSelection.charAt(0),
+      playerSelection.charAt(0).toUpperCase()
+    )}`;
+  } else {
+    message = `You Lose! ${computerSelection.replace(
+      computerSelection.charAt(0),
+      computerSelection.charAt(0).toUpperCase()
+    )} beats ${playerSelection.replace(
+      playerSelection.charAt(0),
+      playerSelection.charAt(0).toUpperCase()
+    )}`;
+    winner = 1;
+  }
+  return [message, winner];
 }
 
-function game(playerSelection){
-    let playerScore = 0;
-    let computerScore = 0;
-    let tieScore = 0;
-    for(let i = 0,winner;i<5;i++){
-        // const playerSelection = "rock";
-        const computerSelection = computerPlay();
-        winner = playRound(playerSelection,
-                                          computerSelection,
-                                          playerScore,
-                                          computerScore);
-        (winner === 1) ? playerScore++ : 
-        (winner === 2) ? computerScore++ : tieScore++;
-    }
-    console.log(playerScore);    
-    console.log(computerScore);
-    console.log(tieScore);
-    if(playerScore > computerScore){
-        console.log("Player Wins!");
-    }
-    else if(playerScore < computerScore){
-        console.log("Computer Wins!");
-    }
-    else{
-        console.log("It' a tie! Good Job Both of you");
-    }
+function checkEndGame(playerScore, computerScore) {
+  if (playerScore === 5) return 0;
+  else if (computerScore === 5) return 1;
+  return;
 }
-const playerSelection = prompt("Choose Rock, Paper or Scissor");
-game(playerSelection);
 
+function showWinnerMessage(indexWinner) {
+  const winnerMessage = document.getElementById("winner-message");
+  if (indexWinner === 0) {
+    winnerMessage.textContent = `${user} Wins!`;
+  } else {
+    winnerMessage.textContent = `Watson Wins!`;
+  }
+  message.textContent = "GAME END!!!";
+}
+
+function updateScore(indexWinner) {
+  if (indexWinner === 0) playerScore++;
+  else if (indexWinner === 1) computerScore++;
+  countPlayer.textContent = playerScore;
+  countComputer.textContent = computerScore;
+}
+
+function setImages(playerSelection, computerSelection) {
+  const imgPlayer = document.createElement("img");
+  const imgComputer = document.createElement("img");
+  imgPlayer.src = `/images/${playerSelection}.png`;
+  imgComputer.src = `/images/${computerSelection}.png`;
+  imgParentPlayer.appendChild(imgPlayer);
+  imgParentComputer.appendChild(imgComputer);
+}
+
+function removeImages() {
+  const childPlayer = imgParentPlayer.firstChild;
+  const childComputer = imgParentComputer.firstChild;
+  imgParentPlayer.removeChild(childPlayer);
+  imgParentComputer.removeChild(childComputer);
+}
+
+buttons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    if (!endGame) {
+      removeImages();
+      let playerSelection = this.getAttribute("id");
+      let computerSelection = computerPlay();
+      const [messageRound, winnerRound] = playRound(playerSelection,computerSelection);
+      message.textContent = messageRound;
+      updateScore(winnerRound);
+      const indexWinner = checkEndGame(playerScore, computerScore);
+      if (typeof indexWinner === "number") {
+        showWinnerMessage(indexWinner);
+        endGame = true;
+      }
+      setImages(playerSelection, computerSelection);
+    }
+  });
+});

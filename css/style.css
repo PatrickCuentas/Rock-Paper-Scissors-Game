@@ -1,0 +1,96 @@
+:root {
+  --color-circulo-imagotipo: #ff7a00;
+  --color-p-imagotipo: #181f2c;
+  --white: #ffffff;
+  --black: #000000;
+  --black-border: var(--black);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 62.5%;
+  font-family: "Russo One", sans-serif;
+}
+body {
+  background: #fafc9f;
+  /* background: var(--color-circulo-imagotipo); */
+}
+h2 {
+  font-size: 2.5rem;
+}
+p {
+  font-size: 2rem;
+  color: white;
+}
+img {
+  width: 8rem;
+  height: 10rem;
+}
+.margin5{
+    margin: 1rem;
+}
+.center {
+  text-align: center;
+}
+.inverted {
+  transform: rotate(-180deg);
+  transform: scaleX(-1);
+}
+.container {
+  min-width: 120rem;
+  height: 70rem;
+  margin: 5rem auto;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.header-container {
+  line-height: 2;
+}
+.box-container {
+  width: 55rem;
+  display: flex;
+  justify-content: space-around;
+  margin: 2.4rem;
+}
+.box {
+  background: rgba(21, 21, 21, 0.85);
+  width: 22rem;
+  height: 20rem;
+}
+.box .header {
+  background: black;
+  padding: 0.8rem;
+}
+.box .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 22rem;
+  margin: 2rem;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border-radius: 50%;
+  width: 5.8rem;
+  height: 5.5rem;
+  cursor: pointer;
+}
+.button i {
+  font-size: 2.5rem;
+  color: var(--color-circulo-imagotipo);
+}
