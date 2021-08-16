@@ -83,8 +83,12 @@ function updateScore(indexWinner) {
 function setImages(playerSelection, computerSelection) {
   const imgPlayer = document.createElement("img");
   const imgComputer = document.createElement("img");
-  imgPlayer.src = `/images/${playerSelection}.png`;
-  imgComputer.src = `/images/${computerSelection}.png`;
+//   !Remoto
+  imgPlayer.src = `https://patrickjohangh.github.io/Rock-Paper-Scissors-Game/images/${playerSelection}-copia.jpg`;
+  imgComputer.src = `https://patrickjohangh.github.io/Rock-Paper-Scissors-Game/images/${computerSelection}-copia.jpg`;
+//   !Local
+//  ! imgPlayer.src = `/images/${playerSelection}-copia.jpg`;
+//  ! imgComputer.src = `/images/${computerSelection}-copia.jpg`;
   imgParentPlayer.appendChild(imgPlayer);
   imgParentComputer.appendChild(imgComputer);
 }
@@ -102,7 +106,10 @@ buttons.forEach(function (button) {
       removeImages();
       let playerSelection = this.getAttribute("id");
       let computerSelection = computerPlay();
-      const [messageRound, winnerRound] = playRound(playerSelection,computerSelection);
+      const [messageRound, winnerRound] = playRound(
+        playerSelection,
+        computerSelection
+      );
       message.textContent = messageRound;
       updateScore(winnerRound);
       const indexWinner = checkEndGame(playerScore, computerScore);
